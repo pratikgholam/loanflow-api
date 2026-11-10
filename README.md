@@ -1,2 +1,2 @@
-# loanflow-api
-REST API for submitting and reviewing loan applications, built with FastAPI, async SQLAlchemy and PostgreSQL. JWT role-based auth, Alembic migrations, pytest unit and integration tests, Docker and GitHub Actions CI.
+# Loan Flow API
+A loan application REST API where applicants submit loans and loan officers review them, with every status change recorded in history. Built with FastAPI, async SQLAlchemy 2.0 and PostgreSQL. Uses JWT authentication with Applicant, LoanOfficer and Admin roles. Fake data only.
