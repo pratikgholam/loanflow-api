@@ -29,13 +29,14 @@ Roles: `Applicant`, `LoanOfficer`, `Admin`.
 | asyncpg | `0.32.0` | PostgreSQL async driver |
 | pydantic-settings | `2.16.2` | Environment config |
 | alembic | `1.20.1` | Database migrations |
+| bcrypt | `4.2.0` | Password hashing |
 | python-jose[cryptography] | `3.5.0` | JWT encode/decode |
-| passlib[bcrypt] | `1.7.4` | Password hashing |
 | python-multipart | `0.0.33` | Form parsing (OAuth2 password flow) |
 | pytest | `9.2.0` | Test runner |
 | pytest-asyncio | `0.28.1` | Async test support |
 | httpx | `0.28.1` | Integration-test HTTP client |
 | ruff | `0.17.4` | Lint + format |
+| email-validator | `2.3.0` | EmailStr validation for schemas |
 | Database | PostgreSQL | (via Docker in Phase 1) |
 
 Dependency management: `pyproject.toml` (PEP 621). Install with:
@@ -190,7 +191,7 @@ rejected  -> (terminal)
 
 - **Role enforcement**: route dependencies require `Applicant` / `LoanOfficer` / `Admin`; unauthorized = `401`, forbidden = `403` (planned: Phase 3).
 - **Admin scope** (confirmed): Admin has full access to manage users and roles. LoanOfficer approves/rejects loan applications. Applicant submits applications and views/checks the status of only their own loans.
-- **Password hashing**: bcrypt via `passlib[bcrypt]`, never store plaintext.
+- **Password hashing**: bcrypt directly (actively maintained), never store plaintext.
 - **JWT**: access tokens via `python-jose`, algorithm `HS256` only (explicitly restrict algorithms on decode to prevent key-confusion attacks), short expiry (`ACCESS_TOKEN_EXPIRE_MINUTES`).
 - **No secrets in code**: `SECRET_KEY` comes from env only; `.env` is gitignored; `.env.example` has dummy values.
 - **No real personal data**: fake data only, in seed scripts and tests.
@@ -266,7 +267,7 @@ rejected  -> (terminal)
 | 0 Project setup (.gitignore, pyproject.toml, venv, folder layout, ruff, AGENTS.md) | ✅ done |
 | 1 Skeleton (`GET /health`, config, Dockerfile, docker-compose, async engine + session dep) | ✅ done |
 | 2 Data model + migrations (users, loan_applications, loan_status_history) | ✅ done |
-| 3 Authentication + authorization (register/login, JWT, role deps) | planned |
+| 3 Authentication + authorization (register/login, JWT, role deps) | ✅ done |
 | 4 Core features (submit/list/view applications, status transitions, history, admin users) | planned |
 | 5 Tests + CI (pytest, test DB, GitHub Actions) | planned |
 | 6 Polish (seed script, README update, PR into main) | planned |
