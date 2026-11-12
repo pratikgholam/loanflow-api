@@ -265,7 +265,7 @@ rejected  -> (terminal)
 |-------|--------|
 | 0 Project setup (.gitignore, pyproject.toml, venv, folder layout, ruff, AGENTS.md) | ✅ done |
 | 1 Skeleton (`GET /health`, config, Dockerfile, docker-compose, async engine + session dep) | ✅ done |
-| 2 Data model + migrations (users, loan_applications, loan_status_history) | planned |
+| 2 Data model + migrations (users, loan_applications, loan_status_history) | ✅ done |
 | 3 Authentication + authorization (register/login, JWT, role deps) | planned |
 | 4 Core features (submit/list/view applications, status transitions, history, admin users) | planned |
 | 5 Tests + CI (pytest, test DB, GitHub Actions) | planned |
