@@ -6,6 +6,7 @@ from fastapi import FastAPI
 
 from app.api.auth import router as auth_router
 from app.api.health import router as health_router
+from app.api.loans import router as loans_router
 from app.api.users import router as users_router
 from app.db.session import engine
 
@@ -22,3 +23,4 @@ app = FastAPI(title="LoanFlow API", lifespan=lifespan)
 app.include_router(health_router)
 app.include_router(auth_router)
 app.include_router(users_router)
+app.include_router(loans_router)

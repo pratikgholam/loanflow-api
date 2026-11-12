@@ -65,12 +65,12 @@ loanflow-api/
 ├── docker-compose.yml     # planned: Phase 1 (API + Postgres)
 ├── app/                   # application code
 │   ├── __init__.py
-│   ├── api/               # route layer (FastAPI routers + deps) — planned: Phase 1+
-│   ├── core/              # config (pydantic Settings), security (JWT/password) — planned: Phase 1/3
-│   ├── models/            # SQLAlchemy 2.0 declarative models — planned: Phase 2
-│   ├── schemas/           # Pydantic request/response schemas — planned: Phase 3/4
-│   ├── services/          # business logic (transition rules, password, JWT) — planned: Phase 3/4
-│   └── db/                # async engine, async_sessionmaker, session dependency — planned: Phase 1
+│   ├── api/               # route layer (FastAPI routers + deps): health, auth, users, loans — Phase 4 done
+│   ├── core/              # config (pydantic Settings), security (JWT/password) — Phase 1/3 done
+│   ├── models/            # SQLAlchemy 2.0 declarative models — Phase 2 done
+│   ├── schemas/           # Pydantic request/response schemas: user, loan — Phase 4 done
+│   ├── services/          # business logic (transition rules, password, JWT, loans) — Phase 4 done
+│   └── db/                # async engine, async_sessionmaker, session dependency — Phase 1 done
 ├── tests/                 # pytest suite
 │   ├── __init__.py
 │   ├── conftest.py        # planned: Phase 5 (fixtures, test DB)
@@ -268,6 +268,6 @@ rejected  -> (terminal)
 | 1 Skeleton (`GET /health`, config, Dockerfile, docker-compose, async engine + session dep) | ✅ done |
 | 2 Data model + migrations (users, loan_applications, loan_status_history) | ✅ done |
 | 3 Authentication + authorization (register/login, JWT, role deps) | ✅ done |
-| 4 Core features (submit/list/view applications, status transitions, history, admin users) | planned |
+| 4 Core features (submit/list/view applications, status transitions, history, admin users) | ✅ done |
 | 5 Tests + CI (pytest, test DB, GitHub Actions) | planned |
 | 6 Polish (seed script, README update, PR into main) | planned |
