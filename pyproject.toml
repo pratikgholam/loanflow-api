@@ -12,6 +12,7 @@ license = { text = "Proprietary" }
 authors = [{ name = "Pratik Gholam" }]
 dependencies = [
     "fastapi==0.162.5",
+    "uvicorn==0.54.0",
     "SQLAlchemy==2.0.57",
     "asyncpg==0.32.0",
     "pydantic-settings==2.16.2",

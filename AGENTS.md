@@ -24,6 +24,7 @@ Roles: `Applicant`, `LoanOfficer`, `Admin`.
 |------|---------|------|
 | Python | 3.14 (`.python-version`) | Runtime |
 | FastAPI | `0.162.5` | Web framework |
+| uvicorn | `0.54.0` | ASGI server |
 | SQLAlchemy | `2.0.57` | async ORM (2.0 style) |
 | asyncpg | `0.32.0` | PostgreSQL async driver |
 | pydantic-settings | `2.16.2` | Environment config |
@@ -98,13 +99,13 @@ cp .env.example .env   # then edit .env with local values
 
 ```bash
 source .venv/bin/activate
-uvicorn app.main:app --reload --host 0.0.0.0 --port 8000   # planned: Phase 1
+uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
 ### Run with Docker
 
 ```bash
-docker compose up --build      # planned: Phase 1 (serves API + Postgres)
+docker compose up --build      # serves API + Postgres; GET /health returns 200
 docker compose down
 ```
 
@@ -168,7 +169,7 @@ CI runs `ruff check`, `ruff format --check`, and `pytest` (GitHub Actions, plann
 
 ## 6. Domain rules
 
-Allowed status transitions (proposed; confirm exact names in Phase 2 before writing models):
+Allowed status transitions (confirmed):
 
 ```
 submitted -> under_review
@@ -178,17 +179,17 @@ approved -> (terminal)
 rejected  -> (terminal)
 ```
 
+- No `cancelled` status.
 - Transitions are defined explicitly and invalid ones are rejected (400/422).
 - Every status change writes one `loan_status_history` row (old status, new status, changed-by user, timestamp) in the same transaction as the status update.
-- Status is an enum (proposed: Python `str, Enum` + SQLAlchemy `Enum`).
-
-> **Open decision**: exact status names and whether `cancelled` exists — confirm before Phase 2 models.
+- Status is an enum (Python `str, Enum` + SQLAlchemy `Enum`).
 
 ---
 
 ## 7. Auth and security rules
 
 - **Role enforcement**: route dependencies require `Applicant` / `LoanOfficer` / `Admin`; unauthorized = `401`, forbidden = `403` (planned: Phase 3).
+- **Admin scope** (confirmed): Admin has full access to manage users and roles. LoanOfficer approves/rejects loan applications. Applicant submits applications and views/checks the status of only their own loans.
 - **Password hashing**: bcrypt via `passlib[bcrypt]`, never store plaintext.
 - **JWT**: access tokens via `python-jose`, algorithm `HS256` only (explicitly restrict algorithms on decode to prevent key-confusion attacks), short expiry (`ACCESS_TOKEN_EXPIRE_MINUTES`).
 - **No secrets in code**: `SECRET_KEY` comes from env only; `.env` is gitignored; `.env.example` has dummy values.
@@ -263,7 +264,7 @@ rejected  -> (terminal)
 | Phase | Status |
 |-------|--------|
 | 0 Project setup (.gitignore, pyproject.toml, venv, folder layout, ruff, AGENTS.md) | ✅ done |
-| 1 Skeleton (`GET /health`, config, Dockerfile, docker-compose, async engine + session dep) | planned |
+| 1 Skeleton (`GET /health`, config, Dockerfile, docker-compose, async engine + session dep) | ✅ done |
 | 2 Data model + migrations (users, loan_applications, loan_status_history) | planned |
 | 3 Authentication + authorization (register/login, JWT, role deps) | planned |
 | 4 Core features (submit/list/view applications, status transitions, history, admin users) | planned |
