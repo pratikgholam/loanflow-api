@@ -1,0 +1,52 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "loanflow-api"
+version = "0.1.0"
+description = "Loan application REST API (FastAPI, async SQLAlchemy 2.0, PostgreSQL, JWT). Fake data only."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "Proprietary" }
+authors = [{ name = "Pratik Gholam" }]
+dependencies = [
+    "fastapi==0.162.5",
+    "uvicorn==0.54.0",
+    "SQLAlchemy==2.0.57",
+    "asyncpg==0.32.0",
+    "pydantic-settings==2.16.2",
+    "alembic==1.20.1",
+    "python-jose[cryptography]==3.5.0",
+    "bcrypt==4.2.0",
+    "python-multipart==0.0.33",
+    "email-validator==2.3.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest==9.2.0",
+    "pytest-asyncio==1.4.1.post1",
+    "httpx==0.28.1",
+    "ruff==0.17.4",
+]
+
+[tool.setuptools.packages.find]
+where = ["app"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py314"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B"]
+ignore = ["B008"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["app", "tests"]
+
+[tool.ruff.format]
+quote-style = "double"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
