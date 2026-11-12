@@ -51,6 +51,7 @@ jobs:
         env:
           DATABASE_URL: postgresql+asyncpg://loanflow:loanflow@localhost:5432/loanflow
           TEST_DATABASE_URL: postgresql+asyncpg://loanflow:loanflow@localhost:5432/loanflow_test
+          SECRET_KEY: ci-test-secret-not-for-production
         run: |
           source .venv/bin/activate
           pytest
