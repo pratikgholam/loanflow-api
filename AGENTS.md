@@ -73,9 +73,9 @@ loanflow-api/
 │   └── db/                # async engine, async_sessionmaker, session dependency — Phase 1 done
 ├── tests/                 # pytest suite
 │   ├── __init__.py
-│   ├── conftest.py        # planned: Phase 5 (fixtures, test DB)
-│   ├── unit/              # service-level tests incl. transition rules — planned: Phase 5
-│   └── integration/       # endpoint tests against running API — planned: Phase 5
+│   ├── conftest.py        # Phase 5 done (async session, test client, seeded users)
+│   ├── unit/              # Phase 5 done (service-level tests incl. transition rules)
+│   └── integration/       # Phase 5 done (endpoint tests against test DB)
 ├── alembic/               # migrations (env.py async template) — initialized Phase 2
 │   └── versions/
 └── .venv/                 # local virtual env (gitignored)
@@ -269,5 +269,5 @@ rejected  -> (terminal)
 | 2 Data model + migrations (users, loan_applications, loan_status_history) | ✅ done |
 | 3 Authentication + authorization (register/login, JWT, role deps) | ✅ done |
 | 4 Core features (submit/list/view applications, status transitions, history, admin users) | ✅ done |
-| 5 Tests + CI (pytest, test DB, GitHub Actions) | planned |
+| 5 Tests + CI (pytest, test DB, GitHub Actions) | ✅ done |
 | 6 Polish (seed script, README update, PR into main) | planned |

@@ -1,5 +1,6 @@
 """Loan application request/response Pydantic schemas."""
 
+from datetime import datetime
 from typing import Optional
 
 from pydantic import BaseModel, Field
@@ -18,8 +19,8 @@ class LoanApplicationRead(BaseModel):
     amount: float
     purpose: str
     status: LoanStatus
-    created_at: str
-    updated_at: str
+    created_at: datetime
+    updated_at: datetime
 
     model_config = {"from_attributes": True}
 
