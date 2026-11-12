@@ -37,6 +37,23 @@ jobs:
           source .venv/bin/activate
           pip install -e ".[dev]"
 
+      - name: Create test database
+        run: |
+          source .venv/bin/activate
+          python -c "
+import asyncio
+import asyncpg
+
+async def main():
+    conn = await asyncpg.connect(
+        user='loanflow', password='loanflow', database='loanflow', host='localhost'
+    )
+    await conn.execute('CREATE DATABASE loanflow_test')
+    await conn.close()
+
+asyncio.run(main())
+"
+
       - name: Lint (ruff check)
         run: |
           source .venv/bin/activate
