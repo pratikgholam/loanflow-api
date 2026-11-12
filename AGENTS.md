@@ -194,6 +194,7 @@ rejected  -> (terminal)
 - **Password hashing**: bcrypt directly (actively maintained), never store plaintext.
 - **JWT**: access tokens via `python-jose`, algorithm `HS256` only (explicitly restrict algorithms on decode to prevent key-confusion attacks), short expiry (`ACCESS_TOKEN_EXPIRE_MINUTES`).
 - **No secrets in code**: `SECRET_KEY` comes from env only; `.env` is gitignored; `.env.example` has dummy values.
+- **Rate limiting**: `POST /auth/login` (5 req/min) and `POST /auth/register` (3 req/min) are rate limited per client IP via `app/core/rate_limit.py`; 429 when exceeded.
 - **No real personal data**: fake data only, in seed scripts and tests.
 
 ---
@@ -270,4 +271,4 @@ rejected  -> (terminal)
 | 3 Authentication + authorization (register/login, JWT, role deps) | ✅ done |
 | 4 Core features (submit/list/view applications, status transitions, history, admin users) | ✅ done |
 | 5 Tests + CI (pytest, test DB, GitHub Actions) | ✅ done |
-| 6 Polish (seed script, README update, PR into main) | planned |
+| 6 Polish (seed script, README update, PR into main) | ✅ done |

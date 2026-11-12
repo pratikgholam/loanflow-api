@@ -5,6 +5,7 @@ from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.api.deps import get_session
+from app.core.rate_limit import rate_limit_login, rate_limit_register
 from app.schemas.token import Token
 from app.schemas.user import UserCreate, UserRead
 from app.services.auth_service import authenticate_user, login_token, register_user
@@ -12,7 +13,12 @@ from app.services.auth_service import authenticate_user, login_token, register_u
 router = APIRouter(prefix="/auth", tags=["auth"])
 
 
-@router.post("/register", response_model=UserRead, status_code=status.HTTP_201_CREATED)
+@router.post(
+    "/register",
+    response_model=UserRead,
+    status_code=status.HTTP_201_CREATED,
+    dependencies=[Depends(rate_limit_register)],
+)
 async def register(user_in: UserCreate, session: AsyncSession = Depends(get_session)):
     """Register a new applicant account."""
     try:
@@ -24,7 +30,11 @@ async def register(user_in: UserCreate, session: AsyncSession = Depends(get_sess
     return user
 
 
-@router.post("/login", response_model=Token)
+@router.post(
+    "/login",
+    response_model=Token,
+    dependencies=[Depends(rate_limit_login)],
+)
 async def login(
     form_data: OAuth2PasswordRequestForm = Depends(),
     session: AsyncSession = Depends(get_session),
